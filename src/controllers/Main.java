@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.util.Collection;
 
+import com.google.common.base.Optional;
+
 import asg.cliche.Command;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
@@ -37,7 +39,11 @@ public class Main
   @Command(description="Delete a User")
   public void deleteUser (@Param(name="email") String email)
   {
-    paceApi.deleteUser(email);
+    Optional<User> user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    if (user.isPresent())
+    {
+      paceApi.deleteUser(user.get().id);
+    }
   }
 
   public static void main(String[] args) throws IOException

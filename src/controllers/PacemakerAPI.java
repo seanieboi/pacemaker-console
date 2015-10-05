@@ -1,43 +1,47 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import models.User;
 
 public class PacemakerAPI
 {
-  //private List <User> users = new ArrayList<User>();
+  private Map<Long, User>     userIndex       = new HashMap<>();
+  private Map<String, User>   emailIndex      = new HashMap<>();
 
-  private Map<String, User> users = new HashMap<String, User>();
-  
   public Collection<User> getUsers ()
   {
-    return users.values();
+    return userIndex.values();
   }
 
   public  void deleteUsers() 
   {
-    users.clear();
+    userIndex.clear();
+    emailIndex.clear();
   }
 
   public User createUser(String firstName, String lastName, String email, String password) 
   {
     User user = new User (firstName, lastName, email, password);
-    users.put(email, user);
+    userIndex.put(user.id, user);
+    emailIndex.put(email, user);
     return user;
+  }
+
+  public User getUserByEmail(String email) 
+  {
+    return emailIndex.get(email);
   }
 
   public User getUser(String email) 
   {
-    return users.get(email);
+    return userIndex.get(email);
   }
 
-  public void deleteUser(String email) 
+  public void deleteUser(Long id) 
   {
-    users.remove(email);
+    User user = userIndex.remove(id);
+    emailIndex.remove(user.email);
   }
 }
