@@ -1,15 +1,14 @@
 package controllers;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.Collection;
-
-import com.google.common.base.Optional;
-
+import models.Activity;
+import models.User;
 import asg.cliche.Command;
+import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
-import models.User;
-import asg.cliche.Param;
+import com.google.common.base.Optional;
 
 public class Main
 {
@@ -22,12 +21,13 @@ public class Main
     paceApi.createUser(firstName, lastName, email, password);
   }
 
-  @Command(description="Get a Users details")
+  @Command(description="Get a Users detail")
   public void getUser (@Param(name="email") String email)
   {
-    User user = paceApi.getUser(email);
+    User user = paceApi.getUserByEmail(email);
     System.out.println(user);
   }
+  
 
   @Command(description="Get all users details")
   public void getUsers ()
@@ -45,8 +45,30 @@ public class Main
       paceApi.deleteUser(user.get().id);
     }
   }
+  
+  @Command(description="Add an activity")
+  public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
+                           @Param(name="location") String location, @Param(name="distance") double distance)
+  {
+    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+    if (user.isPresent())
+    {
+      paceApi.createActivity(id, type, location, distance);
+    }
+  }
 
-  public static void main(String[] args) throws IOException
+  @Command(description="Add Location to an activity")
+  public void addLocation (@Param(name="activity-id")  Long  id,   
+                           @Param(name="latitude")     float latitude, @Param(name="longitude") float longitude)
+  {
+    Optional<Activity> activity = Optional.fromNullable(paceApi.getActivity(id));
+    if (activity.isPresent())
+    {
+      paceApi.addLocation(activity.get().id, latitude, longitude);
+    }
+  }
+
+  public static void main(String[] args) throws Exception
   {
     Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", new Main());
     shell.commandLoop(); 
