@@ -84,4 +84,35 @@ public class PacemakerAPI
       activity.get().route.add(new Location(latitude, longitude));
     }
   }
+  
+  @SuppressWarnings("unchecked")
+  void load(File file) throws Exception
+  {
+    ObjectInputStream is = null;
+    try
+    {
+      XStream xstream = new XStream(new DomDriver());
+      is = xstream.createObjectInputStream(new FileReader(file));
+      userIndex       = (Map<Long, User>)     is.readObject();
+      emailIndex      = (Map<String, User>)   is.readObject();
+      activitiesIndex = (Map<Long, Activity>) is.readObject();
+    }
+    finally
+    {
+      if (is != null)
+      {
+        is.close();
+      }
+    }
+  }
+
+  void store(File file) throws Exception
+  {
+    XStream xstream = new XStream(new DomDriver());
+    ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(file));
+    out.writeObject(userIndex);
+    out.writeObject(emailIndex);
+    out.writeObject(activitiesIndex);
+    out.close(); 
+  }
 }

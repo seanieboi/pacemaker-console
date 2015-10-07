@@ -70,7 +70,17 @@ public class Main
 
   public static void main(String[] args) throws Exception
   {
-    Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", new Main());
-    shell.commandLoop(); 
+    Main main = new Main();
+
+    File  datastore = new File("datastore.xml");
+    if (datastore.isFile())
+    {
+      main.paceApi.load(datastore);
+    }
+
+    Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
+    shell.commandLoop();
+
+    main.paceApi.store(datastore);
   }
 }
