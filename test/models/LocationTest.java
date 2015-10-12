@@ -25,4 +25,5 @@ public class LocationTest
   {
     assertEquals ("Location{" + locations[0].id + ", 23.3, 33.3}", locations[0].toString());
   }
+  
 }

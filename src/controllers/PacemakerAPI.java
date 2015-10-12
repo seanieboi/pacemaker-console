@@ -42,16 +42,7 @@ public class PacemakerAPI
     userIndex       = (Map<Long, User>)     serializer.pop();
   }
 
-/*  @SuppressWarnings("unchecked")
-  void load() throws Exception
-  {
-    serializer.read();
-    userIndex       = (Map<Long, User>)     serializer.pop();
-    emailIndex      = (Map<String, User>)   serializer.pop();
-    activitiesIndex = (Map<Long, Activity>) serializer.pop();
-  }*/
-  
-  void store() throws Exception
+  public void store() throws Exception
   {
     serializer.push(userIndex);
     serializer.push(emailIndex);
@@ -95,15 +86,17 @@ public class PacemakerAPI
     User user = userIndex.remove(id);
     emailIndex.remove(user.email);
   }
-  public void createActivity(Long id, String type, String location, double distance)
+  public Activity createActivity(Long id, String type, String location, double distance)
   {
-    Activity activity = new Activity (type, location, distance);
+    Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent())
     {
+      activity = new Activity (type, location, distance);
       user.get().activities.put(activity.id, activity);
       activitiesIndex.put(activity.id, activity);
     }
+    return activity;
   }
 
   public Activity getActivity (Long id)
