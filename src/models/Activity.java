@@ -10,19 +10,19 @@ import com.google.common.base.Objects;
 public class Activity 
 { 
   static Long   counter = 0l;
-
+  
   public Long   id;
-
+  
   public String type;
   public String location;
   public double distance;
-
+  
   public List<Location> route = new ArrayList<>();
-
+ 
   public Activity()
   {
   }
-
+  
   public Activity(String type, String location, double distance)
   {
     this.id        = counter++;
@@ -30,7 +30,7 @@ public class Activity
     this.location  = location;
     this.distance  = distance;
   }
-
+  
   @Override
   public String toString()
   {
@@ -41,7 +41,7 @@ public class Activity
                                .addValue(route)
                                .toString();
   }
-
+  
   @Override  
   public int hashCode()  
   {  

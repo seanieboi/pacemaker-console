@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Collection;
 import models.Activity;
 import models.User;
+import utils.Serializer;
+import utils.XMLSerializer;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import asg.cliche.Shell;
@@ -12,8 +14,20 @@ import com.google.common.base.Optional;
 
 public class Main
 {
-  PacemakerAPI paceApi = new PacemakerAPI();
+  public PacemakerAPI paceApi;
 
+  public Main() throws Exception
+  {
+    File  datastore = new File("datastore.xml");
+    Serializer serializer = new XMLSerializer(datastore);
+    
+    paceApi = new PacemakerAPI(serializer);
+    if (datastore.isFile())
+    {
+      paceApi.load();
+    }
+  }
+  
   @Command(description="Create a new User")
   public void createUser (@Param(name="first name") String firstName, @Param(name="last name") String lastName, 
                           @Param(name="email")      String email,     @Param(name="password")  String password)
@@ -72,15 +86,9 @@ public class Main
   {
     Main main = new Main();
 
-    File  datastore = new File("datastore.xml");
-    if (datastore.isFile())
-    {
-      main.paceApi.load(datastore);
-    }
-
     Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
     shell.commandLoop();
 
-    main.paceApi.store(datastore);
+    main.paceApi.store();
   }
 }

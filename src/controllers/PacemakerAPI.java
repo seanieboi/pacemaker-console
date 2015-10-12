@@ -18,12 +18,47 @@ import java.util.Map;
 import models.Activity;
 import models.Location;
 import models.User;
+import utils.Serializer;
 
 public class PacemakerAPI
 {
   private Map<Long, User>     userIndex       = new HashMap<>();
   private Map<String, User>   emailIndex      = new HashMap<>();
   private Map<Long, Activity> activitiesIndex = new HashMap<>();
+  
+  private Serializer serializer;
+
+  public PacemakerAPI(Serializer serializer)
+  {
+    this.serializer = serializer;
+  }
+
+  @SuppressWarnings("unchecked")
+  public void load() throws Exception
+  {
+    serializer.read();
+    activitiesIndex = (Map<Long, Activity>) serializer.pop();
+    emailIndex      = (Map<String, User>)   serializer.pop();
+    userIndex       = (Map<Long, User>)     serializer.pop();
+  }
+
+/*  @SuppressWarnings("unchecked")
+  void load() throws Exception
+  {
+    serializer.read();
+    userIndex       = (Map<Long, User>)     serializer.pop();
+    emailIndex      = (Map<String, User>)   serializer.pop();
+    activitiesIndex = (Map<Long, Activity>) serializer.pop();
+  }*/
+  
+  void store() throws Exception
+  {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
+  }
+  //...
   
 
   public Collection<User> getUsers ()
