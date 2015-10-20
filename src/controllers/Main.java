@@ -60,6 +60,17 @@ public class Main
     }
   }
   
+  //Delete User by ID
+  @Command(description="Delete a User")
+  public void deleteUser (@Param(name="id") Long id)
+  {
+    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+    if (user.isPresent())
+    {
+      paceApi.deleteUser(user.get().id);
+    }
+  }
+  
   @Command(description="Add an activity")
   public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
                            @Param(name="location") String location, @Param(name="distance") double distance)

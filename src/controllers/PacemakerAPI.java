@@ -57,7 +57,7 @@ public class PacemakerAPI
     return userIndex.values();
   }
 
-  public  void deleteUsers() 
+  public void deleteUsers() 
   {
     userIndex.clear();
     emailIndex.clear();
