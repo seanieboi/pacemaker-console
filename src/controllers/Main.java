@@ -101,6 +101,14 @@ public class Main
     }
   }
 
+  //List activities
+  @Command(description="Get an Activities detail")
+  public void getActivity (@Param(name="id") Long id)
+  {
+    Activity activity = paceApi.getActivity(id);
+    System.out.println(activity);
+  }
+  
   public static void main(String[] args) throws Exception
   {
     Main main = new Main();
