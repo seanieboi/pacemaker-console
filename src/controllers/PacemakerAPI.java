@@ -76,7 +76,7 @@ public class PacemakerAPI
     return emailIndex.get(email);
   }
 
-  public User getUser(Long id) 
+  public User listUser(Long id) 
   {
     return userIndex.get(id);
   }

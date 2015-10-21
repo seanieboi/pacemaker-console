@@ -41,8 +41,16 @@ public class Main
     User user = paceApi.getUserByEmail(email);
     System.out.println(user);
   }
-  
 
+  //Get User by ID
+  @Command(description="Get a Users detail")
+  public void listUser (@Param(name="id") Long id)
+  {
+    User user = paceApi.listUser(id);
+    System.out.println(user);
+  }
+  ///
+  
   @Command(description="Get all users details")
   public void getUsers ()
   {
@@ -64,7 +72,7 @@ public class Main
   @Command(description="Delete a User")
   public void deleteUser (@Param(name="id") Long id)
   {
-    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+    Optional<User> user = Optional.fromNullable(paceApi.listUser(id));
     if (user.isPresent())
     {
       paceApi.deleteUser(user.get().id);
@@ -75,7 +83,7 @@ public class Main
   public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
                            @Param(name="location") String location, @Param(name="distance") double distance)
   {
-    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
+    Optional<User> user = Optional.fromNullable(paceApi.listUser(id));
     if (user.isPresent())
     {
       paceApi.createActivity(id, type, location, distance);
