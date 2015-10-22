@@ -35,15 +35,8 @@ public class Main
     paceApi.createUser(firstName, lastName, email, password);
   }
 
-  @Command(description="Get a Users detail")
-  public void getUser (@Param(name="email") String email)
-  {
-    User user = paceApi.getUserByEmail(email);
-    System.out.println(user);
-  }
-
   //Get User by ID
-  @Command(description="Get a Users detail")
+  @Command(description="List a Users detail by ID")
   public void listUser (@Param(name="id") Long id)
   {
     User user = paceApi.listUser(id);
@@ -51,13 +44,22 @@ public class Main
   }
   ///
   
-  @Command(description="Get all users details")
-  public void getUsers ()
+  @Command(description="List a Users detail by Email")
+  public void listUser (@Param(name="email") String email)
   {
-    Collection<User> users = paceApi.getUsers();
+    User user = paceApi.getUserByEmail(email);
+    System.out.println(user);
+  }
+  
+  @Command(description="List all users details")
+  public void listUsers ()
+  {
+    Collection<User> users = paceApi.listUsers();
     System.out.println(users);
   }
 
+  /*
+   * Not needed
   @Command(description="Delete a User")
   public void deleteUser (@Param(name="email") String email)
   {
@@ -67,6 +69,7 @@ public class Main
       paceApi.deleteUser(user.get().id);
     }
   }
+  */
   
   //Delete User by ID
   @Command(description="Delete a User")
@@ -94,7 +97,7 @@ public class Main
   public void addLocation (@Param(name="activity-id")  Long  id,   
                            @Param(name="latitude")     float latitude, @Param(name="longitude") float longitude)
   {
-    Optional<Activity> activity = Optional.fromNullable(paceApi.getActivity(id));
+    Optional<Activity> activity = Optional.fromNullable(paceApi.listActivty(id));
     if (activity.isPresent())
     {
       paceApi.addLocation(activity.get().id, latitude, longitude);
@@ -103,9 +106,9 @@ public class Main
 
   //List activities
   @Command(description="Get an Activities detail")
-  public void getActivity (@Param(name="id") Long id)
+  public void listActivities(@Param(name="id") Long id)
   {
-    Activity activity = paceApi.getActivity(id);
+    Activity activity = paceApi.listActivty(id);
     System.out.println(activity);
   }
   

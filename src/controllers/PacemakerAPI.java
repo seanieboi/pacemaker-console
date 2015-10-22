@@ -51,8 +51,7 @@ public class PacemakerAPI
   }
   //...
   
-
-  public Collection<User> getUsers ()
+  public Collection<User> listUsers()
   {
     return userIndex.values();
   }
@@ -99,12 +98,12 @@ public class PacemakerAPI
     return activity;
   }
 
-  public Activity getActivity (Long id)
+  public Activity listActivty(Long id)
   {
     return activitiesIndex.get(id);
   }
 
-  public void addLocation (Long id, float latitude, float longitude)
+  public void addLocation(Long id, float latitude, float longitude)
   {
     Optional<Activity> activity = Optional.fromNullable(activitiesIndex.get(id));
     if (activity.isPresent())

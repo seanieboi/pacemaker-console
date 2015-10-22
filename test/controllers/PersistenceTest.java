@@ -56,14 +56,14 @@ public class PersistenceTest
   public void testPopulate()
   { 
     pacemaker = new PacemakerAPI(null);
-    assertEquals(0, pacemaker.getUsers().size());
+    assertEquals(0, pacemaker.listUsers().size());
     populate (pacemaker);
     
-    assertEquals(users.length, pacemaker.getUsers().size());
+    assertEquals(users.length, pacemaker.listUsers().size());
     assertEquals(2, pacemaker.getUserByEmail(users[0].email).activities.size());
     assertEquals(2, pacemaker.getUserByEmail(users[1].email).activities.size());   
     Long activityID = pacemaker.getUserByEmail(users[0].email).activities.keySet().iterator().next();
-    assertEquals(locations.length, pacemaker.getActivity(activityID).route.size());   
+    assertEquals(locations.length, pacemaker.listActivty(activityID).route.size());   
   }
 
   
@@ -82,10 +82,10 @@ public class PersistenceTest
     PacemakerAPI pacemaker2 =  new PacemakerAPI(serializer);
     pacemaker2.load();
     
-    assertEquals (pacemaker.getUsers().size(), pacemaker2.getUsers().size());
-    for (User user : pacemaker.getUsers())
+    assertEquals (pacemaker.listUsers().size(), pacemaker2.listUsers().size());
+    for (User user : pacemaker.listUsers())
     {
-      Collection<User> users = pacemaker2.getUsers();
+      Collection<User> users = pacemaker2.listUsers();
       System.out.println("User to search for:");
       System.out.println(user);
       System.out.println("Collection");
