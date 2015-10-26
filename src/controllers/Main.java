@@ -123,6 +123,13 @@ public class Main
       paceApi.addLocation(activity.get().id, latitude, longitude);
     }
   }
+  
+  @Command(description="Load File")
+  void load (@Param(name="load") File file)
+  {
+    
+    
+  }
 
 
   public static void main(String[] args) throws Exception
