@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
+
 import models.Activity;
 import models.User;
 import utils.Serializer;
@@ -51,11 +53,29 @@ public class Main
     System.out.println(user);
   }
   
+  //List activities
+  @Command(description="Get an Activities by User ID")
+  public void listActivities(@Param(name="id") Long id)
+  {
+    //User user = paceApi.listUser(id);
+    Activity activity = paceApi.listActivty(id);
+    System.out.println(activity);
+  }
+  
+  
   @Command(description="List all users details")
   public void listUsers ()
   {
     Collection<User> users = paceApi.listUsers();
-    System.out.println(users);
+    
+    //adds a new line between users
+    Iterator newLine = users.iterator();
+    while (newLine.hasNext())
+      {
+        String name = newLine.next().toString();
+
+        System.out.println(name);
+      } 
   }
 
   /*
@@ -104,14 +124,7 @@ public class Main
     }
   }
 
-  //List activities
-  @Command(description="Get an Activities detail")
-  public void listActivities(@Param(name="id") Long id)
-  {
-    Activity activity = paceApi.listActivty(id);
-    System.out.println(activity);
-  }
-  
+
   public static void main(String[] args) throws Exception
   {
     Main main = new Main();

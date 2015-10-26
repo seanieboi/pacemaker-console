@@ -30,6 +30,7 @@ public class User
     this.lastName  = lastName;
     this.email     = email;
     this.password  = password;
+    
   }
   
   @Override
@@ -38,8 +39,8 @@ public class User
     return toStringHelper(this).addValue(id)
                                .addValue(firstName)
                                .addValue(lastName)
-                               .addValue(password)
-                               .addValue(email)  
+                               .addValue(email)
+                               .addValue(password)  
                                .addValue(activities)
                                .toString();
   }
