@@ -14,6 +14,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 
 import models.Activity;
 import models.Location;
@@ -80,13 +81,13 @@ public class PacemakerAPI
     User user = userIndex.remove(id);
     emailIndex.remove(user.email);
   }
-  public Activity createActivity(Long id, String type, String location, double distance)
+  public Activity createActivity(Long id, String type, String location, double distance, DateTime startTime)
   {
     Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent())
     {
-      activity = new Activity (type, location, distance);
+      activity = new Activity (type, location, distance, startTime);
       user.get().activities.put(activity.id, activity);
       activitiesIndex.put(activity.id, activity);
     }
@@ -99,7 +100,7 @@ public class PacemakerAPI
 	  Optional<User> user = Optional.fromNullable(userIndex.get(id));
 	  if (user.isPresent())
 	    {
-	        user.get().activities.get(activity.id, activity);
+	        user.get().activities.get(activity.id);
 	        
 	    }
 	  return activity;

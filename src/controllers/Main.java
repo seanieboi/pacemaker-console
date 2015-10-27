@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.joda.time.DateTime;
+
 import models.Activity;
 import models.User;
 import utils.Serializer;
@@ -111,12 +113,13 @@ public class Main
   
   @Command(description="Add an activity")
   public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
-                           @Param(name="location") String location, @Param(name="distance") double distance)
+                           @Param(name="location") String location, @Param(name="distance") double distance,
+                           @Param(name="start-time") DateTime startTime)
   {
     Optional<User> user = Optional.fromNullable(paceApi.listUser(id));
     if (user.isPresent())
     {
-      paceApi.createActivity(id, type, location, distance);
+      paceApi.createActivity(id, type, location, distance, startTime);
     }
   }
 

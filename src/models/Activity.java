@@ -5,6 +5,8 @@ import static com.google.common.base.Objects.toStringHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.google.common.base.Objects;
 
 public class Activity 
@@ -12,10 +14,13 @@ public class Activity
   static Long   counter = 0l;
   
   public Long   id;
-  
   public String type;
   public String location;
   public double distance;
+  public String start;
+  DateTime startTime = new DateTime();
+  //DateTime startTime = DateTime.parse(start);
+
   
   public List<Location> route = new ArrayList<>();
  
@@ -23,12 +28,13 @@ public class Activity
   {
   }
   
-  public Activity(String type, String location, double distance)
+  public Activity(String type, String location, double distance, DateTime startTime)
   {
     this.id        = counter++;
     this.type      = type;
     this.location  = location;
     this.distance  = distance;
+    this.startTime = startTime; 
   }
   
   @Override
@@ -38,6 +44,7 @@ public class Activity
                                .addValue(type)
                                .addValue(location)
                                .addValue(distance)
+                               .addValue(startTime)
                                .addValue(route)
                                .toString();
   }
@@ -45,7 +52,7 @@ public class Activity
   @Override  
   public int hashCode()  
   {  
-     return Objects.hashCode(this.id, this.type, this.location, this.distance);  
+     return Objects.hashCode(this.id, this.type, this.location, this.distance, this.startTime);  
   } 
   
   @Override
@@ -57,6 +64,7 @@ public class Activity
       return Objects.equal(type, other.type) 
           && Objects.equal(location,  other.location)
           && Objects.equal(distance,  other.distance)
+          && Objects.equal(startTime, other.startTime)
           && Objects.equal(route,     other.route);    
     }
     else
