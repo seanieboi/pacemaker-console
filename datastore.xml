@@ -4,7 +4,7 @@
     <vector>
       <default>
         <capacityIncrement>0</capacityIncrement>
-        <elementCount>3</elementCount>
+        <elementCount>6</elementCount>
         <elementData>
           <map>
             <entry>
@@ -104,52 +104,8 @@
               <models.User reference="../../../map/entry/models.User"/>
             </entry>
             <entry>
-              <string>dany@mail.com</string>
-              <models.User>
-                <id>1</id>
-                <firstName>danny</firstName>
-                <lastName>ocnnor</lastName>
-                <email>dany@mail.com</email>
-                <password>secret</password>
-                <activities/>
-              </models.User>
-            </entry>
-            <entry>
               <string>marge@simpson.com</string>
               <models.User reference="../../../map/entry[2]/models.User"/>
-            </entry>
-            <entry>
-              <string>marge\cf5</string>
-              <models.User>
-                <id>0</id>
-                <firstName>marge</firstName>
-                <lastName>simpson</lastName>
-                <email>marge\cf5</email>
-                <password>\expnd0\expndtw0\kerning0</password>
-                <activities/>
-              </models.User>
-            </entry>
-            <entry>
-              <string>sean@mail.com</string>
-              <models.User>
-                <id>0</id>
-                <firstName>sean</firstName>
-                <lastName>oconnor</lastName>
-                <email>sean@mail.com</email>
-                <password>1234</password>
-                <activities/>
-              </models.User>
-            </entry>
-            <entry>
-              <string>test@mail.com</string>
-              <models.User>
-                <id>0</id>
-                <firstName>test</firstName>
-                <lastName>test2</lastName>
-                <email>test@mail.com</email>
-                <password>test</password>
-                <activities/>
-              </models.User>
             </entry>
           </map>
           <map>
@@ -174,9 +130,9 @@
               <models.Activity reference="../../../map/entry[2]/models.User/activities/entry[2]/models.Activity"/>
             </entry>
           </map>
-          <null/>
-          <null/>
-          <null/>
+          <map reference="../map"/>
+          <map reference="../map[2]"/>
+          <map reference="../map[3]"/>
           <null/>
           <null/>
           <null/>

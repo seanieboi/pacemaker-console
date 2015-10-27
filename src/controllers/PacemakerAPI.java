@@ -32,23 +32,7 @@ public class PacemakerAPI
   {
     this.serializer = serializer;
   }
-
-  @SuppressWarnings("unchecked")
-  public void load() throws Exception
-  {
-    serializer.read();
-    activitiesIndex = (Map<Long, Activity>) serializer.pop();
-    emailIndex      = (Map<String, User>)   serializer.pop();
-    userIndex       = (Map<Long, User>)     serializer.pop();
-  }
-
-  public void store() throws Exception
-  {
-    serializer.push(userIndex);
-    serializer.push(emailIndex);
-    serializer.push(activitiesIndex);
-    serializer.write(); 
-  }
+  
   //...
   
   public Collection<User> listUsers()
@@ -56,6 +40,11 @@ public class PacemakerAPI
     return userIndex.values();
   }
 
+  public Collection<Activity> listActivities()
+  {
+    return activitiesIndex.values();
+  }
+  
   public void deleteUsers() 
   {
     userIndex.clear();
@@ -73,6 +62,12 @@ public class PacemakerAPI
   public User getUserByEmail(String email) 
   {
     return emailIndex.get(email);
+  }
+  
+  public User getActivityByUser(Long id) 
+  {
+	return  userIndex.get(activitiesIndex);
+    //return activitiesIndex.get(id);
   }
 
   public User listUser(Long id) 
@@ -100,7 +95,14 @@ public class PacemakerAPI
 
   public Activity listActivty(Long id)
   {
-    return activitiesIndex.get(id);
+	  Activity activity = null;
+	  Optional<User> user = Optional.fromNullable(userIndex.get(id));
+	  if (user.isPresent())
+	    {
+	        user.get().activities.get(activity.id, activity);
+	        
+	    }
+	  return activity;
   }
 
   public void addLocation(Long id, float latitude, float longitude)
@@ -110,6 +112,23 @@ public class PacemakerAPI
     {
       activity.get().route.add(new Location(latitude, longitude));
     }
+  }
+  
+  @SuppressWarnings("unchecked")
+  public void load() throws Exception
+  {
+    serializer.read();
+    activitiesIndex = (Map<Long, Activity>) serializer.pop();
+    emailIndex      = (Map<String, User>)   serializer.pop();
+    userIndex       = (Map<Long, User>)     serializer.pop();
+  }
+
+  public void store() throws Exception
+  {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
   }
   
   @SuppressWarnings("unchecked")
