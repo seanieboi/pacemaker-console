@@ -114,12 +114,12 @@ public class Main
   @Command(description="Add an activity")
   public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
                            @Param(name="location") String location, @Param(name="distance") double distance,
-                           @Param(name="start-time") DateTime startTime)
+                           @Param(name="start-time") String start)
   {
     Optional<User> user = Optional.fromNullable(paceApi.listUser(id));
     if (user.isPresent())
     {
-      paceApi.createActivity(id, type, location, distance, startTime);
+      paceApi.createActivity(id, type, location, distance, start);
     }
   }
 

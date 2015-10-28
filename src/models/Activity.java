@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.google.common.base.Objects;
 
@@ -17,10 +19,13 @@ public class Activity
   public String type;
   public String location;
   public double distance;
-  public String start;
-  DateTime startTime = new DateTime();
+  //public String start;
+  //DateTime startTime = new DateTime();
   //DateTime startTime = DateTime.parse(start);
 
+  DateTime startTime = new DateTime();
+  DateTimeFormatter dt = DateTimeFormat.forPattern("dd,mm,yyyy");
+  public String start = dt.print(startTime);
   
   public List<Location> route = new ArrayList<>();
  
@@ -28,18 +33,20 @@ public class Activity
   {
   }
   
-  public Activity(String type, String location, double distance, DateTime startTime)
+  public Activity(String type, String location, double distance, String start)
   {
     this.id        = counter++;
     this.type      = type;
     this.location  = location;
     this.distance  = distance;
-    this.startTime = startTime; 
+    this.start = start; 
   }
   
   @Override
   public String toString()
   {
+    //startTime = DateTime.parse(start);
+    
     return toStringHelper(this).addValue(id)
                                .addValue(type)
                                .addValue(location)
@@ -64,7 +71,7 @@ public class Activity
       return Objects.equal(type, other.type) 
           && Objects.equal(location,  other.location)
           && Objects.equal(distance,  other.distance)
-          && Objects.equal(startTime, other.startTime)
+          && Objects.equal(start, other.start)
           && Objects.equal(route,     other.route);    
     }
     else
