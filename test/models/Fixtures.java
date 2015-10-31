@@ -12,11 +12,11 @@ public class Fixtures
 
   public static Activity[] activities =
   {
-    new Activity ("walk",  "fridge", 0.001),
-    new Activity ("walk",  "bar",    1.0),
-    new Activity ("run",   "work",   2.2),
-    new Activity ("walk",  "shop",   2.5),
-    new Activity ("cycle", "school", 4.5)
+    new Activity ((long) 1, "walk",  "fridge", 0.001, "time"),
+    new Activity ((long) 2, "walk",  "fridge", 4.5, "time"),
+    new Activity ((long) 3, "run",   "work",   2.2, "time"),
+    new Activity ((long) 4, "walk",  "shop",   2.5, "time"),
+    new Activity ((long) 5, "cycle", "school", 4.5, "time")
   };
 
   public static Location[]locations =

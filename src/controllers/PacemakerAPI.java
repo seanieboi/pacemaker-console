@@ -34,18 +34,16 @@ public class PacemakerAPI
     this.serializer = serializer;
   }
   
-  //...
-  
   public Collection<User> listUsers()
   {
     return userIndex.values();
   }
 
-  public Collection<Activity> listActivities()
+  public Collection<Activity> listActivities(Long userId)
   {
-    return activitiesIndex.values();
+      return activitiesIndex.values();
   }
-  
+
   public void deleteUsers() 
   {
     userIndex.clear();
@@ -55,7 +53,8 @@ public class PacemakerAPI
   public User createUser(String firstName, String lastName, String email, String password) 
   {
     User user = new User (firstName, lastName, email, password);
-    userIndex.put(user.id, user);
+    user.id = (long) (userIndex.size() + 1);
+    userIndex.put(user.id , user);
     emailIndex.put(email, user);
     return user;
   }
@@ -65,10 +64,9 @@ public class PacemakerAPI
     return emailIndex.get(email);
   }
   
-  public User getActivityByUser(Long id) 
+  public Activity getActivityByUser(Long userId) 
   {
-	return  userIndex.get(activitiesIndex);
-    //return activitiesIndex.get(id);
+    return activitiesIndex.get(userId);
   }
 
   public User listUser(Long id) 
@@ -81,13 +79,15 @@ public class PacemakerAPI
     User user = userIndex.remove(id);
     emailIndex.remove(user.email);
   }
+  
   public Activity createActivity(Long id, String type, String location, double distance, String start)
   {
     Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent())
     {
-      activity = new Activity (type, location, distance, start);
+      activity = new Activity (id, type, location, distance, start);
+      activity.id = (long) (activitiesIndex.size()+1);      
       user.get().activities.put(activity.id, activity);
       activitiesIndex.put(activity.id, activity);
     }
@@ -96,14 +96,15 @@ public class PacemakerAPI
 
   public Activity listActivty(Long id)
   {
-	  Activity activity = null;
-	  Optional<User> user = Optional.fromNullable(userIndex.get(id));
-	  if (user.isPresent())
-	    {
-	        user.get().activities.get(activity.id);
-	        
-	    }
-	  return activity;
+    Activity activity = null;
+    Optional<User> user = Optional.fromNullable(userIndex.get(id));
+    if (user.isPresent())
+      {
+          //activtyIndex
+          user.get().activities.get(activity.userId);
+          
+      }
+    return activity;
   }
 
   public void addLocation(Long id, float latitude, float longitude)
@@ -162,4 +163,15 @@ public class PacemakerAPI
     out.writeObject(activitiesIndex);
     out.close(); 
   }
+  
+
+  public Activity createActivity2(Long userId, String type, String location,
+    double distance, String start) {
+      
+    Activity activity = new Activity(userId, type, location, distance, start);
+//      user.id = (long) (userIndex.size() + 1);
+//      userIndex.put(user.id , user);
+//      emailIndex.put(email, user);
+      return activity;
+}
 }

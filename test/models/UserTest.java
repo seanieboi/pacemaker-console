@@ -35,7 +35,7 @@ public class UserTest
   @Test
   public void testToString()
   {
-    assertEquals ("User{" + homer.id + ", homer, simpson, secret, homer@simpson.com, {}}", homer.toString());
+    assertEquals ("User{" + homer.id + ", homer, simpson, homer@simpson.com, secret, {}}", homer.toString());
   }
   
   @Test

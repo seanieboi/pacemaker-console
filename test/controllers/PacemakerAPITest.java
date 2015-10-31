@@ -41,7 +41,7 @@ public class PacemakerAPITest
     assertEquals (users.length, pacemaker.listUsers().size());
     pacemaker.createUser("homer", "simpson", "homer@simpson.com", "secret");
     assertEquals (users.length+1, pacemaker.listUsers().size());
-    assertEquals (users[0], pacemaker.getUserByEmail(users[0].email));
+    assertEquals (users[1], pacemaker.getUserByEmail(users[1].email));
   }  
 
   @Test
@@ -69,17 +69,17 @@ public class PacemakerAPITest
   public void testAddActivity()
   {
     User marge = pacemaker.getUserByEmail("marge@simpson.com");
-    Activity activity = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance);
+    Activity activity = pacemaker.createActivity(marge.id, activities[1].type, activities[0].location, activities[0].distance, activities[0].start);
     Activity returnedActivity = pacemaker.listActivty(activity.id);
-    assertEquals(activities[0],  returnedActivity);
-    assertNotSame(activities[0], returnedActivity);
+    assertEquals(activities[1],  returnedActivity);
+    assertNotSame(activities[1], returnedActivity);
   }  
   
   @Test
   public void testAddActivityWithMultipleLocation()
   {
     User marge = pacemaker.getUserByEmail("marge@simpson.com");
-    Long activityId = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance).id;
+    Long activityId = pacemaker.createActivity(marge.id, activities[0].type, activities[0].location, activities[0].distance, activities[0].start).id;
 
     for (Location location : locations)
     {

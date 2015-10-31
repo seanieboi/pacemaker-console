@@ -16,6 +16,7 @@ public class Activity
   static Long   counter = 0l;
   
   public Long   id;
+  public Long   userId;
   public String type;
   public String location;
   public double distance;
@@ -23,7 +24,7 @@ public class Activity
   //DateTime startTime = new DateTime();
   //DateTime startTime = DateTime.parse(start);
 
-  DateTime startTime = new DateTime();
+  public DateTime startTime = new DateTime();
   DateTimeFormatter dt = DateTimeFormat.forPattern("dd,mm,yyyy");
   public String start = dt.print(startTime);
   
@@ -33,9 +34,11 @@ public class Activity
   {
   }
   
-  public Activity(String type, String location, double distance, String start)
+  public Activity(Long userId, String type, String location, double distance, String start)
   {
+   
     this.id        = counter++;
+    this.userId    = userId;
     this.type      = type;
     this.location  = location;
     this.distance  = distance;
